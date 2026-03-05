@@ -27,8 +27,8 @@ ErrorDocument 404 /index.html
 <IfModule mod_expires.c>
   ExpiresActive On
 
-  # HTML: 1 hora
-  ExpiresByType text/html "access plus 1 hour"
+  # HTML: FORÇA ATUALIZAÇÃO IMEDIATA (0 Cache)
+  ExpiresByType text/html "access plus 0 seconds"
 
   # CSS e JS: 1 semana
   ExpiresByType text/css "access plus 1 week"
@@ -44,3 +44,12 @@ ErrorDocument 404 /index.html
   ExpiresByType image/svg+xml "access plus 1 month"
   ExpiresByType image/x-icon "access plus 1 month"
 </IfModule>
+
+# Forçar cabeçalhos Anti-Cache no HTML (Garante atualização imediata na Hostinger/Navegadores)
+<FilesMatch "\.(html|htm)$">
+    <IfModule mod_headers.c>
+        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </IfModule>
+</FilesMatch>
